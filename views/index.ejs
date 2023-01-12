@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="display-2">
+        Vehicles
+      </h1>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
+        Vehical</button>
+    </div>
+    <table class="table table-hover table-borderd">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Engine</th>
+          <th>Color</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% vehicles.forEach(function(vehicle){ %>
+          <tr>
+            <td>
+              <%= vehicle.v_type %>
+            </td>
+            <td>
+              <%= vehicle.description %>
+            </td>
+            <td>
+              <%= vehicle.engine %>
+            </td>
+            <td>
+              <%= vehicle.color %>
+            </td>
+            <td><button class="btn btn-sm btn-primary">Edit</button> <button
+                class="btn btn-sm btn-danger">Delete</button></td>
+          </tr>
+          <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Vehicle</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/save" method="post">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <label for="Type">Type:</label>
+              <input type="text" class="form-control" name="v_type">
+            </div>
+            <div class="form-group mb-3">
+              <label for="Description">Description:</label>
+              <input type="text" class="form-control" name="description">
+            </div>
+            <div class="form-group mb-3">
+              <label for="Engine">Engine:</label>
+              <input type="text" class="form-control" name="engine">
+            </div>
+            <div class="form-group mb-3">
+              <label for="Color">Color:</label>
+              <input type="text" class="form-control" name="color">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
