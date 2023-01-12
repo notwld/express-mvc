@@ -7,7 +7,7 @@ First install all the dependencies using,
 ```bash
 npm i
 ```
-Create an .env file and define database's URI and Port.
+Create an .env file and define database's URI and application's Port.
 ```bash
 URI=(your connection string)
 PORT=3000
