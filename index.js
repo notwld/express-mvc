@@ -25,7 +25,7 @@ app.set("view engine", "ejs")
 app.post("/save",async(req,res)=>{
     const newVehicle = await vehicle.create(req.body)
     await newVehicle.save()
-    res.send("Added!")
+    return res.redirect("/")
 })
 app.get("/", async(req, res) => {
     const vehicles = await vehicle.find();
