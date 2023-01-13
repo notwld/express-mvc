@@ -37,7 +37,7 @@ npm start
   GET /
 ```
 
-#### POST Vehicle
+#### Create Vehicle
 
 ```http
   POST /save
@@ -50,4 +50,34 @@ npm start
 | `model` | `string` | **Required**. Vehicle Model |
 | `engine` | `string` | **Required**. Vehicle Engine |
 | `color` | `string` | **Required**. Vehicle Color |
+
+#### Update Vehicle
+
+```http
+  POST /update/:id
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required**. Vehicle Id |
+
+#### Delete Vehicle
+
+```http
+ DELETE /delete/:id
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required**. Vehicle Id |
+
+#### GET Vehicle
+
+```http
+ GET /vehicle/:id
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required**. Vehicle Id |
 
