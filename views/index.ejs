@@ -7,7 +7,8 @@
   <title>Bootstrap demo</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-</head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
 
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
@@ -18,8 +19,7 @@
       </button>
       <div class="d-flex justify-content-between align-items-center" id="navbarSupportedContent">    
         <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="myInput">
         </form>
       </div>
     </div>
@@ -32,7 +32,7 @@
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
         Vehical</button>
     </div>
-    <table class="table table-hover table-borderd">
+    <table class="table table-hover table-borderd" id="myTable">
       <thead>
         <tr>
           <th>Type</th>
@@ -44,7 +44,7 @@
       </thead>
       <tbody>
         <% vehicles.forEach(function(vehicle){ %>
-          <tr>
+          <tr id="row">
             <td>
               <%= vehicle.v_type %>
             </td>
@@ -149,6 +149,15 @@
     document.getElementsByName('edit_engine')[0].value = engine
     document.getElementsByName('edit_color')[0].value = color
   }
+  // filter data 
+  $(document).ready(function () {
+    $("#myInput").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#myTable #row").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
 </script>
 
 </html>
