@@ -8,7 +8,13 @@ The Model-View-Controller (MVC) is an architectural pattern that separates an ap
 
 # Getting Started
 
-First install all the dependencies using,
+Firstly, clone this repository to your local machine.
+
+```bash
+git clone https://github.com/notwld/express-mvc
+```
+
+Install all the dependencies using,
 ```bash
 npm i
 ```
