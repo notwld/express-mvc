@@ -4,10 +4,10 @@ const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const ejs = require("ejs");
 
-const vehicle = require("./models/vehicle")
+const vehicle = require("./controller/vehicle")
 
 dotenv.config()
-mongoose.connect(process.env.URI + "/Vehicle")
+mongoose.connect(process.env.URI)
     .then(res => {
         console.log("Connected to MongoDB server")
     })
@@ -19,20 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.set("view engine", "ejs")
 
 
-
 //routes
-
-app.post("/save",async(req,res)=>{
-    const newVehicle = await vehicle.create(req.body)
-    await newVehicle.save()
-    return res.redirect("/")
-})
-app.get("/", async(req, res) => {
-    const vehicles = await vehicle.find();
-    res.render("index",{
-        vehicles:vehicles
-    })
-})
+app.use("/", vehicle)
 
 
 //server

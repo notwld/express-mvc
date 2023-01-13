@@ -57,8 +57,8 @@
             <td>
               <%= vehicle.color %>
             </td>
-            <td><button class="btn btn-sm btn-primary">Edit</button> <button
-                class="btn btn-sm btn-danger">Delete</button></td>
+            <td><button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editForm('<%= vehicle._id %>','<%= vehicle.v_type %>','<%= vehicle.description %>','<%= vehicle.engine %>','<%= vehicle.color %>')">Edit</button> <a
+              href="/delete/<%= vehicle._id %>"  class="btn btn-sm btn-danger">Delete</a></td>
           </tr>
           <% }); %>
       </tbody>
@@ -100,9 +100,55 @@
       </div>
     </div>
   </div>
+  <div class="modal fade edit" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Vehicle</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="editForm" method="post">
+          <div class="modal-body">
+            <input type="text" name="id" hidden>
+            <div class="form-group mb-3">
+              <label for="Type">Type:</label>
+              <input type="text" class="form-control" name="edit_v_type">
+            </div>
+            <div class="form-group mb-3">
+              <label for="Description">Description:</label>
+              <input type="text" class="form-control" name="edit_description">
+            </div>
+            <div class="form-group mb-3">
+              <label for="Engine">Engine:</label>
+              <input type="text" class="form-control" name="edit_engine">
+            </div>
+            <div class="form-group mb-3">
+              <label for="Color">Color:</label>
+              <input type="text" class="form-control" name="edit_color">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
     crossorigin="anonymous"></script>
 </body>
+
+<script>
+  const editForm = (id, v_type, description, engine, color) => {
+    document.getElementById('editForm').action = `/update/${id}`
+    document.getElementsByName('id')[0].value = id
+    document.getElementsByName('edit_v_type')[0].value = v_type
+    document.getElementsByName('edit_description')[0].value = description
+    document.getElementsByName('edit_engine')[0].value = engine
+    document.getElementsByName('edit_color')[0].value = color
+  }
+</script>
 
 </html>
