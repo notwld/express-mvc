@@ -60,6 +60,11 @@ npm start
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `id` | `string` | **Required**. Vehicle Id |
+| `edit_v_type` | `string` | **Required**. Vehicle Type |
+| `edit_description` | `string` | **Required**. Vehicle Description |
+| `edit_model` | `string` | **Required**. Vehicle Model |
+| `edit_engine` | `string` | **Required**. Vehicle Engine |
+| `edit_color` | `string` | **Required**. Vehicle Color |
 
 #### Delete Vehicle
 
