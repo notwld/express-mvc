@@ -1,163 +1,243 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bootstrap demo</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+      integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </head>
 
-<body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Shapatar Vehicles</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="d-flex justify-content-between align-items-center" id="navbarSupportedContent">    
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="myInput">
-        </form>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg bg-body-tertiary bg-dark"
+      data-bs-theme="dark"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Shapatar Vehicles</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="d-flex justify-content-between align-items-center"
+          id="navbarSupportedContent"
+        >
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              id="myInput"
+            />
+          </form>
+        </div>
       </div>
-    </div>
-  </nav>
-  <div class="container my-5">
-    <div class="d-flex justify-content-between align-items-center">
-      <h1 class="display-2">
-        Vehicles
-      </h1>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
-        Vehical</button>
-    </div>
-    <table class="table table-hover table-borderd" id="myTable">
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Engine</th>
-          <th>Color</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% vehicles.forEach(function(vehicle){ %>
+    </nav>
+    <div class="container my-5">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1 class="display-2">Vehicles</h1>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Add Vehical
+        </button>
+      </div>
+      <table class="table table-hover table-borderd" id="myTable">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Engine</th>
+            <th>Color</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% vehicles.forEach(function(vehicle){ %>
           <tr id="row">
+            <td><%= vehicle.v_type %></td>
+            <td><%= vehicle.description %></td>
+            <td><%= vehicle.engine %></td>
+            <td><%= vehicle.color %></td>
             <td>
-              <%= vehicle.v_type %>
+              <button
+                class="btn btn-sm btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#editModal"
+                onclick="editForm('<%= vehicle._id %>','<%= vehicle.v_type %>','<%= vehicle.description %>','<%= vehicle.engine %>','<%= vehicle.color %>')"
+              >
+                Edit
+              </button>
+              <a href="/delete/<%= vehicle._id %>" class="btn btn-sm btn-danger"
+                >Delete</a
+              >
             </td>
-            <td>
-              <%= vehicle.description %>
-            </td>
-            <td>
-              <%= vehicle.engine %>
-            </td>
-            <td>
-              <%= vehicle.color %>
-            </td>
-            <td><button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editForm('<%= vehicle._id %>','<%= vehicle.v_type %>','<%= vehicle.description %>','<%= vehicle.engine %>','<%= vehicle.color %>')">Edit</button> <a
-              href="/delete/<%= vehicle._id %>"  class="btn btn-sm btn-danger">Delete</a></td>
           </tr>
           <% }); %>
-      </tbody>
-    </table>
-  </div>
+        </tbody>
+      </table>
+    </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Vehicle</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Vehicle</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form action="/vehicle/save" method="post">
+            <div class="modal-body">
+              <div class="form-group mb-3">
+                <label for="Type">Type:</label>
+                <input type="text" class="form-control" name="v_type" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="Description">Description:</label>
+                <input type="text" class="form-control" name="description" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="Engine">Engine:</label>
+                <input type="text" class="form-control" name="engine" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="Color">Color:</label>
+                <input type="text" class="form-control" name="color" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </form>
         </div>
-        <form action="/save" method="post">
-          <div class="modal-body">
-            <div class="form-group mb-3">
-              <label for="Type">Type:</label>
-              <input type="text" class="form-control" name="v_type">
-            </div>
-            <div class="form-group mb-3">
-              <label for="Description">Description:</label>
-              <input type="text" class="form-control" name="description">
-            </div>
-            <div class="form-group mb-3">
-              <label for="Engine">Engine:</label>
-              <input type="text" class="form-control" name="engine">
-            </div>
-            <div class="form-group mb-3">
-              <label for="Color">Color:</label>
-              <input type="text" class="form-control" name="color">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
       </div>
     </div>
-  </div>
-  <div class="modal fade edit" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Vehicle</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div
+      class="modal fade edit"
+      id="editModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Edit Vehicle
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form id="editForm" method="post">
+            <div class="modal-body">
+              <input type="text" name="id" hidden />
+              <div class="form-group mb-3">
+                <label for="Type">Type:</label>
+                <input type="text" class="form-control" name="edit_v_type" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="Description">Description:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="edit_description"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="Engine">Engine:</label>
+                <input type="text" class="form-control" name="edit_engine" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="Color">Color:</label>
+                <input type="text" class="form-control" name="edit_color" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </form>
         </div>
-        <form id="editForm" method="post">
-          <div class="modal-body">
-            <input type="text" name="id" hidden>
-            <div class="form-group mb-3">
-              <label for="Type">Type:</label>
-              <input type="text" class="form-control" name="edit_v_type">
-            </div>
-            <div class="form-group mb-3">
-              <label for="Description">Description:</label>
-              <input type="text" class="form-control" name="edit_description">
-            </div>
-            <div class="form-group mb-3">
-              <label for="Engine">Engine:</label>
-              <input type="text" class="form-control" name="edit_engine">
-            </div>
-            <div class="form-group mb-3">
-              <label for="Color">Color:</label>
-              <input type="text" class="form-control" name="edit_color">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
       </div>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-    crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 
-<script>
-  const editForm = (id, v_type, description, engine, color) => {
-    document.getElementById('editForm').action = `/update/${id}`
-    document.getElementsByName('id')[0].value = id
-    document.getElementsByName('edit_v_type')[0].value = v_type
-    document.getElementsByName('edit_description')[0].value = description
-    document.getElementsByName('edit_engine')[0].value = engine
-    document.getElementsByName('edit_color')[0].value = color
-  }
-  // filter data 
-  $(document).ready(function () {
-    $("#myInput").on("keyup", function () {
-      var value = $(this).val().toLowerCase();
-      $("#myTable #row").filter(function () {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  <script>
+    const editForm = (id, v_type, description, engine, color) => {
+      document.getElementById("editForm").action = `/vehicle/update/${id}`;
+      document.getElementsByName("id")[0].value = id;
+      document.getElementsByName("edit_v_type")[0].value = v_type;
+      document.getElementsByName("edit_description")[0].value = description;
+      document.getElementsByName("edit_engine")[0].value = engine;
+      document.getElementsByName("edit_color")[0].value = color;
+    };
+    // filter data
+    $(document).ready(function () {
+      $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable #row").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
       });
     });
-  });
-</script>
-
+  </script>
 </html>

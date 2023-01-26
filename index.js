@@ -4,8 +4,6 @@ const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const ejs = require("ejs");
 
-const vehicle = require("./controller/vehicle")
-
 dotenv.config()
 mongoose.connect(process.env.URI)
     .then(res => {
@@ -20,7 +18,8 @@ app.set("view engine", "ejs")
 
 
 //routes
-app.use("/", vehicle)
+app.use("/vehicle", require("./controller/vehicle"))
+app.use("/company", require("./controller/company"))
 
 
 //server
