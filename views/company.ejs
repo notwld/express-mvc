@@ -69,51 +69,42 @@
     </nav>
     <div class="container my-5">
       <div class="d-flex justify-content-between align-items-center">
-        <h1 class="display-2">Vehicles</h1>
+        <h1 class="display-2">Brands</h1>
         <button
           type="button"
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
-          Add Vehical
+          Add Brand
         </button>
       </div>
       <table class="table table-hover table-borderd" id="myTable">
         <thead>
           <tr>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Engine</th>
-            <th>Color</th>
-            <th>Brand</th>
+            <th>Name</th>
+            <th>Location</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <% vehicles.forEach(function(vehicle){ %>
+          <% brands.forEach(function(brand){ %>
           <tr id="row">
-            <td><%= vehicle.v_type %></td>
-            <td><%= vehicle.description %></td>
-            <td><%= vehicle.engine %></td>
-            <td><%= vehicle.color %></td>
-            <td><%= vehicle.company.name %></td>
+            <td><%= brand.name %></td>
+            <td><%= brand.location %></td>
             <td>
               <button
                 class="btn btn-sm btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#editModal"
-                onclick="editForm('<%= vehicle._id %>','<%= vehicle.v_type %>','<%= vehicle.description %>','<%= vehicle.engine %>','<%= vehicle.color %>','<%= vehicle.company._id %>')"
+                onclick="editForm('<%= brand._id %>','<%= brand.name %>','<%= brand.location %>')"
               >
                 Edit
               </button>
               <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#del" 
-              onclick=`${document.getElementById(`confirmDel`).href="/delete/<%= vehicle._id %>"}`>
+              onclick=`${document.getElementById(`confirmBDel`).href="/deletebrand/<%= brand._id %>"}`>
                 Delete
               </button>
-              <!-- <a href="/delete/<%= vehicle._id %>" class="btn btn-sm btn-danger"
-                >Delete</a
-              > -->
             </td>
           </tr>
           <% }); %>
@@ -134,11 +125,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete this vehicle?
+        Are you sure you want to delete this brand?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a type="button" class="btn btn-danger" id="confirmDel">Confirm Delete</a>
+        <a type="button" class="btn btn-danger" id="confirmBDel">Confirm Delete</a>
       </div>
     </div>
   </div>
@@ -153,7 +144,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Vehicle</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Brand</h1>
             <button
               type="button"
               class="btn-close"
@@ -161,31 +152,26 @@
               aria-label="Close"
             ></button>
           </div>
-          <form action="/save" method="post">
+          <form action="/savebrand" method="post">
             <div class="modal-body">
-              <div class="form-group mb-3">
-                <label for="Type">Type:</label>
-                <input type="text" class="form-control" name="v_type" />
-              </div>
-              <div class="form-group mb-3">
-                <label for="Description">Description:</label>
-                <input type="text" class="form-control" name="description" />
-              </div>
-              <div class="form-group mb-3">
-                <label for="Engine">Engine:</label>
-                <input type="text" class="form-control" name="engine" />
-              </div>
-              <div class="form-group mb-3">
-                <label for="Color">Color:</label>
-                <input type="text" class="form-control" name="color" />
-              </div>
-              <div class="form-group mb-3">
-                <select class="form-select" aria-label="Default select example" id="brand" name="company">
-                  <option selected>Select brand</option>
-                  <% companies.forEach(function(brand){ %>
-                  <option value="<%= brand._id %>"><%= brand.name %></option>
-                  <% }); %>
-                </select>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    aria-describedby="emailHelp"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="location"
+                    name="location"
+                    />
               </div>
               
             </div>
@@ -216,7 +202,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">
-              Edit Vehicle
+              Edit Brand
             </h1>
             <button
               type="button"
@@ -228,34 +214,24 @@
           <form id="editForm" method="post">
             <div class="modal-body">
               <input type="text" name="id" hidden />
-              <div class="form-group mb-3">
-                <label for="Type">Type:</label>
-                <input type="text" class="form-control" name="edit_v_type" />
-              </div>
-              <div class="form-group mb-3">
-                <label for="Description">Description:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="edit_description"
-                />
-              </div>
-              <div class="form-group mb-3">
-                <label for="Engine">Engine:</label>
-                <input type="text" class="form-control" name="edit_engine" />
-              </div>
-              <div class="form-group mb-3">
-                <label for="Color">Color:</label>
-                <input type="text" class="form-control" name="edit_color" />
-              </div>
-              <div class="form-group mb-3">
-                <select class="form-select" aria-label="Default select example" id="brand" name="edit_company">
-                  <option selected>Select brand</option>
-                  <% companies.forEach(function(brand){ %>
-                  <option value="<%= brand._id %>"><%= brand.name %></option>
-                  <% }); %>
-                </select>
-              </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="b_name"
+                    name="b_name"
+                    aria-describedby="emailHelp"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="b_location"
+                    name="b_location"
+                    />
             </div>
             <div class="modal-footer">
               <button
@@ -281,15 +257,12 @@
   </body>
 
   <script>
-    const editForm = (id, v_type, description, engine, color,company) => {
-      document.getElementById("editForm").action = `/update/${id}`;
-      document.getElementsByName("id")[0].value = id;
-      document.getElementsByName("edit_v_type")[0].value = v_type;
-      document.getElementsByName("edit_description")[0].value = description;
-      document.getElementsByName("edit_engine")[0].value = engine;
-      document.getElementsByName("edit_color")[0].value = color;
-      document.getElementsByName("edit_company")[0].value = company;
+    const editForm = (id, name, location) => {
+      document.getElementById("editForm").action = `/updatebrand/${id}`;
+      document.getElementById("b_name").value = name;
+      document.getElementById("b_location").value = location;
     };
+
     // filter data
     $(document).ready(function () {
       $("#myInput").on("keyup", function () {

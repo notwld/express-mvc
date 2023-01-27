@@ -1,40 +1,38 @@
 const Company = require('../model/company.model');
 const router = require("express").Router();
 
-router.get("/",(req, res) => {
-  Company.find()
-    .then(companies => res.json(companies))
-    .catch(err => res.status(404).json({ nocompaniesfound: 'No companies found' }));
+router.get("/companies",async(req, res) => {
+  const companies = await Company.find()
+  res.render("company",{
+    brands:companies
+    })
+
 });
 
-router.get("/:id", (req, res) => {
+
+router.post("/savebrand", async(req, res) => {
+    const newCompany = new Company({
+        name: req.body.name,
+        location: req.body.location,
+        vehicles: []
+    });
+    await newCompany.save()
+    res.redirect("/companies")
+}
+);
+
+router.post("/updatebrand/:id", async (req, res) => {
     const id = req.params.id;
-    const company = Company.findById(id)
-        .then(company => res.json(company))
-        .catch(err => res.status(404).json({ nocompanyfound: 'No company found with that ID' }));
-    }
-    
-);
-
-router.post("/", (req, res) => {
-    Company.create(req.body)
-        .then(company => res.json({ msg: 'Company added successfully' }))
-        .catch(err => res.status(400).json({ error: 'Unable to add this company' }));
+    await Company.updateOne({ _id: id }, { $set: { name: req.body.b_name, location: req.body.b_location } })
+    res.redirect("/companies")
 }
 );
 
-router.put("/:id", (req, res) => {
-    Company.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
-    .then(company => res.json(company))
-    .catch(err => res.status(404).json({ nocompanyfound: 'No company found with that ID' }));
+router.get("/deletebrand/:id", async (req, res) => {
+    const id = req.params.id;
+    await Company.findByIdAndDelete(id)
+    res.redirect("/companies")
 }
-);
-
-router.delete("/:id", (req, res) => {
-    Company.findByIdAndRemove(req.params.id, req.body)
-        .then(company => res.json({ mgs: 'Company entry deleted successfully' }))
-        .catch(err => res.status(404).json({ nocompanyfound: 'No company found' }));
-    }
 );
 
 module.exports = router;
