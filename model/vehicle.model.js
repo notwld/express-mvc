@@ -5,7 +5,7 @@ const vehicleSchema = new mongoose.Schema({
     description: String,
     engine: String,
     color: String,
-    company: { type: Schema.Types.ObjectId, ref: 'Company', required: true }
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
 })
 
 

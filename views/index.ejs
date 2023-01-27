@@ -71,6 +71,7 @@
             <th>Description</th>
             <th>Engine</th>
             <th>Color</th>
+            <th>Brand</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -81,18 +82,23 @@
             <td><%= vehicle.description %></td>
             <td><%= vehicle.engine %></td>
             <td><%= vehicle.color %></td>
+            <td><%= vehicle.company.name %></td>
             <td>
               <button
                 class="btn btn-sm btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#editModal"
-                onclick="editForm('<%= vehicle._id %>','<%= vehicle.v_type %>','<%= vehicle.description %>','<%= vehicle.engine %>','<%= vehicle.color %>')"
+                onclick="editForm('<%= vehicle._id %>','<%= vehicle.v_type %>','<%= vehicle.description %>','<%= vehicle.engine %>','<%= vehicle.color %>','<%= vehicle.company._id %>')"
               >
                 Edit
               </button>
-              <a href="/delete/<%= vehicle._id %>" class="btn btn-sm btn-danger"
+              <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#del" 
+              onclick=`${document.getElementById(`confirmDel`).href="/delete/<%= vehicle._id %>"}`>
+                Delete
+              </button>
+              <!-- <a href="/delete/<%= vehicle._id %>" class="btn btn-sm btn-danger"
                 >Delete</a
-              >
+              > -->
             </td>
           </tr>
           <% }); %>
@@ -101,6 +107,27 @@
     </div>
 
     <!-- Modal -->
+    <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="del" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this vehicle?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a type="button" class="btn btn-danger" id="confirmDel">Confirm Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
     <div
       class="modal fade"
       id="exampleModal"
@@ -119,7 +146,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <form action="/vehicle/save" method="post">
+          <form action="/save" method="post">
             <div class="modal-body">
               <div class="form-group mb-3">
                 <label for="Type">Type:</label>
@@ -137,6 +164,15 @@
                 <label for="Color">Color:</label>
                 <input type="text" class="form-control" name="color" />
               </div>
+              <div class="form-group mb-3">
+                <select class="form-select" aria-label="Default select example" id="brand" name="company">
+                  <option selected>Select brand</option>
+                  <% companies.forEach(function(brand){ %>
+                  <option value="<%= brand._id %>"><%= brand.name %></option>
+                  <% }); %>
+                </select>
+              </div>
+              
             </div>
             <div class="modal-footer">
               <button
@@ -197,6 +233,14 @@
                 <label for="Color">Color:</label>
                 <input type="text" class="form-control" name="edit_color" />
               </div>
+              <div class="form-group mb-3">
+                <select class="form-select" aria-label="Default select example" id="brand" name="edit_company">
+                  <option selected>Select brand</option>
+                  <% companies.forEach(function(brand){ %>
+                  <option value="<%= brand._id %>"><%= brand.name %></option>
+                  <% }); %>
+                </select>
+              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -222,13 +266,14 @@
   </body>
 
   <script>
-    const editForm = (id, v_type, description, engine, color) => {
-      document.getElementById("editForm").action = `/vehicle/update/${id}`;
+    const editForm = (id, v_type, description, engine, color,company) => {
+      document.getElementById("editForm").action = `/update/${id}`;
       document.getElementsByName("id")[0].value = id;
       document.getElementsByName("edit_v_type")[0].value = v_type;
       document.getElementsByName("edit_description")[0].value = description;
       document.getElementsByName("edit_engine")[0].value = engine;
       document.getElementsByName("edit_color")[0].value = color;
+      document.getElementsByName("edit_company")[0].value = company;
     };
     // filter data
     $(document).ready(function () {

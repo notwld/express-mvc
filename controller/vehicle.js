@@ -1,16 +1,25 @@
 const router = require("express").Router()
 const Vehicle = require("../model/vehicle.model")
-
+const Company = require("../model/company.model")
 router.post("/save",async(req,res)=>{
+    console.log(req.body)
     const newVehicle = await Vehicle.create(req.body)
     await newVehicle.save()
     return res.redirect("/")
 })
 
 router.get("/", async(req, res) => {
-    const vehicles = await Vehicle.find();
+    let vehicles = await Vehicle.find();
+
+    const companies = await Company.find();
+    const promises = vehicles.map(async vehicle => {
+        vehicle.company = await Company.findById(vehicle.company)
+        return vehicle
+    })
+    vehicles = await Promise.all(promises)
     res.render("index",{
-        vehicles:vehicles
+        vehicles:vehicles,
+        companies:companies
     })
 })
 
@@ -32,6 +41,7 @@ router.post("/update/:id", async(req, res) => {
         description: req.body.edit_description,
         color: req.body.edit_color,
         engine: req.body.edit_engine,
+        company: req.body.edit_company
     })
     vehicle.save()
     return res.redirect("/")

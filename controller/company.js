@@ -1,4 +1,4 @@
-const { Company } = require('../models/Company');
+const Company = require('../model/company.model');
 const router = require("express").Router();
 
 router.get("/",(req, res) => {
@@ -8,10 +8,12 @@ router.get("/",(req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-    Company.findById(req.params.id)
+    const id = req.params.id;
+    const company = Company.findById(id)
         .then(company => res.json(company))
-        .catch(err => res.status(404).json({ nocompanyfound: 'No company found' }));
+        .catch(err => res.status(404).json({ nocompanyfound: 'No company found with that ID' }));
     }
+    
 );
 
 router.post("/", (req, res) => {

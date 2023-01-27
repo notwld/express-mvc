@@ -18,8 +18,8 @@ app.set("view engine", "ejs")
 
 
 //routes
-app.use("/vehicle", require("./controller/vehicle"))
-app.use("/company", require("./controller/company"))
+app.use("/", require("./controller/vehicle"))
+app.use("/", require("./controller/company"))
 
 
 //server
